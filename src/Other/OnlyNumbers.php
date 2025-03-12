@@ -52,6 +52,8 @@ function OnlyNumbers(array $container)
  */
 function OnlyNumbersV2(array $container)
 {
+    print_r(array_count_values($container));
+    print_r(array_flip(array_count_values($container)));
     $res = array_flip(array_count_values($container));
 
     return isset($res[1]) ? $res[1] : null;
@@ -72,6 +74,7 @@ function OnlyNumbersV3(array $container)
     $num = 0;
     foreach ($container as $v) {
         $num ^= $v;
+        var_dump($num);
     }
 
     return $num;
@@ -81,6 +84,6 @@ function OnlyNumbersV3(array $container)
 // | 方案测试    | php `this.php` || PHPStorm -> 右键 -> Run `this.php`
 // +--------------------------------------------------------------------------
 
-var_dump(OnlyNumbers([11, 22, 22, 11, 5, 63, 13, 5, 63, 18, 89, 13, 89]));
-var_dump(OnlyNumbersV2([11, 22, 22, 11, 5, 63, 13, 5, 63, 18, 89, 13, 89]));
+var_dump(OnlyNumbers([18, 11, 22, 22, 11, 5, 63, 13, 5, 63, 89, 13, 89]));
+var_dump(OnlyNumbersV2([18, 11, 22, 22, 11, 5, 63, 13, 5, 63, 89, 13, 89]));
 var_dump(OnlyNumbersV3([11, 22, 22, 11, 5, 63, 13, 5, 63, 18, 89, 13, 89]));

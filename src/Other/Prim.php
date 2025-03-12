@@ -18,7 +18,7 @@
 
 class Prim
 {
-    protected $c = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'E', 'F'];
+    protected $c = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
     protected $lowcost;
     /**
      * @param array $graph
@@ -40,9 +40,9 @@ class Prim
                     $minid = $j;
                 }
             }
-            echo '<pre>';
+            echo '<pre>'.PHP_EOL;
                 print_r($this->c[$mst[$minid]] ."到" . $this->c[$minid] . " 权值：" . $min);
-            echo '</pre>';
+            echo '</pre>'.PHP_EOL;
 
             $sum += $min;
             $this->lowcost[$minid] = 0;
@@ -54,7 +54,64 @@ class Prim
                 }
             }
         }
-        print_r("sum:" . $sum);
+        print_r("sum:" . $sum.PHP_EOL);
+    }
+
+    protected function prim_main2($graph, $n)
+    {
+        // Initialize lowcost array and adjvex array
+        //$lowcost = array_fill(0, $n, 0);
+        $lowcost = $graph[0];
+        $adjvex = array_fill(0, $n, 0);
+        $sum = 0;
+        
+        // Initialize with first vertex (v0)
+        // for ($i = 1; $i < $n; $i++) {
+        //     $lowcost[$i] = $graph[0][$i];
+        //     $adjvex[$i] = 0;
+        // }
+        print_r($lowcost);
+        print_r($adjvex);
+        
+        // Print header for visualization
+        echo "Minimum Spanning Tree Edges:\n";
+        
+        // Main Prim algorithm loop
+        for ($i = 1; $i < $n; $i++) {
+            $min = 65535; // Using 65535 as infinity
+            $j = 0;
+            $k = 0;
+            
+            // Find the vertex with minimum cost edge
+            for ($j = 1; $j < $n; $j++) {
+                if ($lowcost[$j] != 0 && $lowcost[$j] < $min) {
+                    $min = $lowcost[$j];
+                    $k = $j;
+                }
+            }
+            
+            // Print the selected edge
+            echo "{$this->c[$adjvex[$k]]} - {$this->c[$k]}, Weight: $min\n";
+            $sum += $min;
+            
+            // Update lowcost after adding vertex k to MST
+            $lowcost[$k] = 0;
+            
+            // Update lowcost values considering the newly added vertex
+            print_r($lowcost);
+            for ($j = 1; $j < $n; $j++) {
+                if ($lowcost[$j] != 0 && $graph[$k][$j] < $lowcost[$j]) {
+                    $lowcost[$j] = $graph[$k][$j];
+                    $adjvex[$j] = $k;
+                }
+            }
+            print_r($lowcost);
+            print_r($adjvex);
+            $i == 2 && exit;
+       
+        }
+        
+        echo "Total minimum weight: $sum\n";
     }
 
     public function main()
@@ -62,7 +119,7 @@ class Prim
         $map = [
             [0, 10, 65535, 65535, 65535, 11, 65535, 65535, 65535],
             [10, 0, 18, 65535, 65535, 65535, 16, 65535, 12],
-            [65535, 65535, 0, 22, 65535, 65535, 65535, 65535, 8],
+            [65535, 18, 0, 22, 65535, 65535, 65535, 65535, 8],
             [65535, 65535, 22, 0, 20, 65535, 65535, 16, 21],
             [65535, 65535, 65535, 20, 0, 26, 65535, 7, 65535],
             [11, 65535, 65535, 65535, 26, 0, 17, 65535, 65535],
@@ -71,6 +128,7 @@ class Prim
             [65535, 12, 8, 21, 65535, 65535, 65535, 65535, 0]
         ];
         $this->prim_main($map, count($map));
+        $this->prim_main2($map, count($map));
     }
 }
 

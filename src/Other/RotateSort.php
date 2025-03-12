@@ -27,7 +27,7 @@
 	 *
 	 */
 	
-	$num = 4;
+	$num = 5;
 	$arr = foo($num);
 	for ($i = 0; $i < $num; $i++) {
 		echo implode(',', $arr[$i])."<br>";

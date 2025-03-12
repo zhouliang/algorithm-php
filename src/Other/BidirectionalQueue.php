@@ -149,4 +149,12 @@ class BidirectionalQueue
 // +--------------------------------------------------------------------------
 
 
-new BidirectionalQueue();
+$queue = new BidirectionalQueue();
+$queue->addLast('A');
+$queue->addLast('B');
+$queue->addLast('C');
+$queue->addLast('D');
+print_r($queue->queue);
+echo 'End: '.$queue->getLast().PHP_EOL;
+echo '头: '.$queue->getFirst().PHP_EOL;
+print_r($queue->queue);
